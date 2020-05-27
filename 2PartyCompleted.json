@@ -1,0 +1,95 @@
+{
+   "promise_id":"3",
+   "established":"2020-05-01T00:00:00Z",
+   "concluded":"",
+   "status": "1", // 1 = completed, 2 = not completed, 3 = in conflict, 4 = rescinded
+   "expiration":"2020-05-15T00:00:00Z",
+   "description":"I'll pay you 5 dollars if you mow my lawn",
+   "notes":"",
+   "parties":[
+      {
+         "party_id":"guid1",
+         "role":"123",
+         "name":"Peter Clark",
+         "notes":""
+      },
+      {
+         "party_id":"guid2",
+         "role":"123",
+         "name":"Allen Sun",
+         "notes":""
+      }
+   ],
+   "obligations":[
+      {
+         "id":"1",
+         "type":"123", // not sure we need this
+         "obligation":"I will give you 5 dollars",
+         "by_party":"guid1",
+         "to_party":[
+            "guid2"
+         ],
+         "on_behalf_of":[],
+         "attestations":[
+            {
+               "id":"1",
+               "party_id":"guid1",
+               "attestation":"1", // 1 = completed, 2 = not completed
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            },
+            {
+               "id":"1",
+               "party_id":"guid2",
+               "attestation":"1", // 1 = completed, 2 = not completed
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            }
+         ],
+         "status":"1", // 1 = completed, 2 = not completed, 3 = in conflict, 4 = rescinded
+         "conditions":"",
+         "attachments":[],
+         "expiration":"2020-05-15T00:00:00Z",
+         "dependent_on": [
+            "2" // obligation IDs
+         ]
+      }, 
+      {
+         "id":"2",
+         "type":"123", // not sure we need this
+         "obligation":"I will mow your lawn",
+         "by_party":"guid2",
+         "to_party":[
+            "guid1"
+         ],
+         "on_behalf_of":[],
+         "attestations":[
+            {
+               "id":"1",
+               "party_id":"guid2",
+               "attestation":"1", // 1 = completed, 2 = not completed
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            },
+            {
+               "id":"1",
+               "party_id":"guid1",
+               "attestation":"1", // 1 = completed, 2 = not completed
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            }
+         ],
+         "status":"1", // 1 = completed, 2 = not completed, 3 = in conflict, 4 = rescinded
+         "conditions":"",
+         "attachments":[
+            {
+               "id":"1",
+               "path":"http://someplace.com/somepath.jpg",
+               "hash":"lskjfsldjfsldkfjsdlfkj"
+            }
+         ],
+         "expiration":"2020-05-15T00:00:00Z",
+         "dependent_on": []
+      }
+   ]   
+}

@@ -1,0 +1,57 @@
+{
+   "promise_id":"123",
+   "established":"2000-01-01T00:00:00Z",
+   "concluded":"2000-01-01T00:00:00Z",
+   "concluded_status":"123",
+   "expiration":"2000-01-01T00:00:00Z",
+   "description":"abc",
+   "notes":"abc",
+   "parties":[
+      {
+         "party_id":"123",
+         "role":"123",
+         "name":"abc",
+         "notes":"abc"
+      }
+   ],
+   "obligations":[
+      {
+         "id":"123",
+         "type":"123",
+         "obligation":"abc",
+         "by_party":"123",
+         "to_party":[
+            "123",
+            "123",
+            "123"
+         ],
+         "on_behalf_of":[
+            "123",
+            "123",
+            "123"
+         ],
+         "attestations":[
+            {
+               "id":"1",
+               "party_id":"123",
+               "attestation":"abc",
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            }
+         ],
+         "status":"abc",
+         "conditions":"abc",
+         "attachments":[
+            {
+               "id":"123",
+               "path":"abc",
+               "hash":"abc"
+            }
+         ],
+         "expiration":"2000-01-01T00:00:00Z",
+         "dependent_on": [
+            "123" // obligation IDs
+         ]
+      }
+   ]   
+}

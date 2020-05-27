@@ -1,0 +1,105 @@
+{
+   "promise_id":"3",
+   "established":"2020-05-01T00:00:00Z",
+   "concluded":"",
+   "status": "1", // 1 = completed, 2 = not completed, 3 = in conflict, 4 = rescinded
+   "expiration":"2020-05-15T00:00:00Z",
+   "description":"I, Grubhub, promise to pass on your tip to the driver, if the driver delivers the food to the customer.",
+   "notes":"",
+   "parties":[
+      {
+         "party_id":"guid1",
+         "role":"123",
+         "name":"Grubhub LLC Limited S Corp C Corp etc.",
+         "notes":""
+      },
+      {
+         "party_id":"guid2",
+         "role":"123",
+         "name":"Allen Sun",
+         "notes":""
+      },
+      {
+         "party_id":"guid3",
+         "role":"123",
+         "name":"Driver",
+         "notes":""
+      }
+   ],
+   "obligations":[
+      {
+         "id":"1",
+         "type":"123", // not sure we need this
+         "obligation":"I will pay the driver $5.00.",
+         "by_party":"guid1",
+         "to_party":[
+            "guid3"
+         ],
+         "on_behalf_of":[
+            "guid2"
+         ],
+         "attestations":[
+            {
+               "id":"1",
+               "party_id":"guid1",
+               "attestation":"1", // 1 = completed, 2 = not completed
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            },
+            {
+               "id":"2",
+               "party_id":"guid3",
+               "attestation":"1", // 1 = completed, 2 = not completed
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            }
+         ],
+         "status":"1", // 1 = completed, 2 = not completed, 3 = in conflict, 4 = rescinded
+         "conditions":"",
+         "attachments":[],
+         "expiration":"2020-05-15T00:00:00Z",
+         "dependent_on": [
+            "2" // obligation IDs
+         ]
+      }, 
+      {
+         "id":"2",
+         "type":"123", // not sure we need this
+         "obligation":"I will deliver the food to the customer.",
+         "by_party":"guid3",
+         "to_party":[
+            "guid2"
+         ],
+         "on_behalf_of":[
+            "guid3"
+         ],
+         "attestations":[
+            {
+               "id":"1",
+               "party_id":"guid2",
+               "attestation":"1", // 1 = completed, 2 = not completed
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            },
+            {
+               "id":"2",
+               "party_id":"guid2",
+               "attestation":"1", // 1 = completed, 2 = not completed
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            }
+         ],
+         "status":"1", // 1 = completed, 2 = not completed, 3 = in conflict, 4 = rescinded
+         "conditions":"",
+         "attachments":[
+            {
+               "id":"1",
+               "path":"http://someplace.com/somepath.jpg",
+               "hash":"lskjfsldjfsldkfjsdlfkj"
+            }
+         ],
+         "expiration":"2020-05-15T00:00:00Z",
+         "dependent_on": []
+      }
+   ]   
+}

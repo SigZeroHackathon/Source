@@ -1,0 +1,41 @@
+{
+   "promise_id":"1",
+   "established":"2000-01-01T00:00:00Z",
+   "concluded":"2000-01-01T00:00:00Z",
+   "status":"1", // 1 = completed, 2 = not completed, 3 = in conflict, 4 = rescinded
+   "expiration":"2010-01-01T00:00:00Z",
+   "description":"I promise to be a good person",
+   "notes":"None, suck it.",
+   "parties":[
+      {
+         "party_id":"some guid probably",
+         "role":"123",
+         "name":"Peter",
+         "notes":"Clark"
+      }
+   ],
+   "obligations":[
+      {
+         "id":"1",
+         "type":"123", // not sure we need this
+         "obligation":"I promise to be a good person",
+         "by_party":"some guid probably",
+         "to_party":[],
+         "on_behalf_of":[],
+         "attestations":[
+            {
+               "id":"1",
+               "party_id":"some guid probably",
+               "attestation":"1", // 1 = completed, 2 = not completed
+               "comment":"",
+               "timestamp": "2020-05-02T00:00:00Z"
+            }
+         ],
+         "status":"1", // 1 = completed, 2 = not completed, 3 = in conflict, 4 = rescinded
+         "conditions":"",
+         "attachments":[],
+         "expiration":"2010-01-01T00:00:00Z",
+         "dependent_on": []
+      }
+   ]   
+}
