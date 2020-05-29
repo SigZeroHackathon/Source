@@ -1,0 +1,22 @@
+{
+  "name": "sls-az-func-rest-api",
+  "version": "1.0.0",
+  "description": "Azure Functions sample for the Serverless framework",
+  "scripts": {
+    "test": "echo \"No tests yet...\"",
+    "start": "func host start"
+  },
+  "keywords": [
+    "azure",
+    "serverless"
+  ],
+  "dependencies": {
+    "@hashgraph/sdk": "^1.1.12",
+    "dotenv": "^8.2.0",
+	"axios": "^0.19.3"
+  },
+  "devDependencies": {
+    "serverless-azure-functions": "^1.0.2",
+    "serverless-dotenv-plugin": "^2.4.2"
+  }
+}
