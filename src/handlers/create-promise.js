@@ -23,7 +23,9 @@ module.exports.handler = async (context, req) => {
 	
 	//Create topic for promise
 	const submitKey = await Ed25519PrivateKey.generate();
+	
 	myTopic = await cpt.createPrivateTopic(submitKey);
+	
 	const topicId = myTopic.topicId;
 	const message = "Hello world";
 	
@@ -33,7 +35,8 @@ module.exports.handler = async (context, req) => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: { myTopic, myMessage } }
+		body: { myTopic, myMessage } 
+	}
 };
 
 
