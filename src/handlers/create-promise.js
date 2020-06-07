@@ -56,10 +56,11 @@ module.exports.handler = async (context, req) => {
 	}
 
 	var reqObligation = utils.getQueryOrBodyParam(req, "ob");
+
 	var promiseModel = pb.buildNewPromise(byParty, toParties, onBehalfParties, reqObligation);
-	console.log(JSON.stringify(promiseModel));
+
 	if(promiseModel){	
-		myMessage = await sm.submitMessage(submitKey, topicId, promiseModel, client);
+		myMessage = await sm.submitMessage(submitKey, topicId, JSON.stringify(promiseModel), client);
 
 		context.res = { status: 200, 
 			headers: {
@@ -72,7 +73,7 @@ module.exports.handler = async (context, req) => {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: { myTopic, promiseModel } 
+			body: { myTopic } 
 		}
 	}		
 };
