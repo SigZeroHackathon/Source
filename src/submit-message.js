@@ -22,5 +22,5 @@ module.exports.submitMessage =  async function(submitKey, topicId, message, clie
 		//This didn't work for some reason...
 		//.getReceipt(client);
 		
-	return message;
+	return message.getReceipt(client);
 }

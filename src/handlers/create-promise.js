@@ -60,13 +60,13 @@ module.exports.handler = async (context, req) => {
 	var promiseModel = pb.buildNewPromise(byParty, toParties, onBehalfParties, reqObligation);
 
 	if(promiseModel){	
-		myMessage = await sm.submitMessage(submitKey, topicId, JSON.stringify(promiseModel), client);
+		returnMessage = await sm.submitMessage(submitKey, topicId, JSON.stringify(promiseModel), client);
 
 		context.res = { status: 200, 
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: { myTopic, myMessage, promiseModel } 
+			body: { myTopic, returnMessage, promiseModel } 
 		}
 	} else {
 		context.res = { status: 200, 
