@@ -4,7 +4,8 @@
   "description": "Azure Functions sample for the Serverless framework",
   "scripts": {
     "test": "echo \"No tests yet...\"",
-    "start": "func host start"
+    "start": "func host start",
+    "postinstall": "npm rebuild grpc --target=12.17.0 --target_arch=ia32 --target_platform=win32 --target_libc=unknown"
   },
   "keywords": [
     "azure",
@@ -18,7 +19,7 @@
     "text-encoding": "^0.7.0"
   },
   "devDependencies": {
-    "serverless-azure-functions": "^1.0.2",
+    "serverless-azure-functions": "^2.0.9",
     "serverless-dotenv-plugin": "^2.4.2"
   }
 }
