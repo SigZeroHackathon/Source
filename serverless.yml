@@ -21,7 +21,7 @@ provider:
   name: azure
   region: Central US
   resourceGroup: sig0-hedera-rg
-  runtime: nodejs10.x
+  runtime: nodejs12
   # prefix: "sample"  # prefix of generated resource name
   subscriptionId: 129f46f8-3a8a-4079-8c86-c646bc3baebf
   storageAccount:
@@ -81,19 +81,19 @@ functions:
     events:
       - http: true
         x-azure-settings:
-          authLevel: anonymous
+          authLevel: function
   create-promise:
     handler: src/handlers/create-promise.handler
     events:
       - http: true
         x-azure-settings:
-          authLevel: anonymous
+          authLevel: function
   get-promise:
     handler: src/handlers/get-promise.handler
     events:
       - http: true
         x-azure-settings:
-          authLevel: anonymous
+          authLevel: function
   # The following are a few examples of other events you can configure:
   # storageBlob:
   #   handler: src/handlers/storageBlob.printMessage
