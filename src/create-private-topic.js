@@ -3,11 +3,12 @@
 const { Client, ConsensusTopicCreateTransaction, Ed25519PrivateKey, Ed25519PublicKey } = require("@hashgraph/sdk");
 require("dotenv").config();
 
-module.exports.createPrivateTopic = async function(submitKey){
+module.exports.createPrivateTopic = async function(){
 	
 	console.log("Create private topic");
     const operatorPrivateKey = process.env.OPERATOR_KEY;
     const operatorAccount = process.env.OPERATOR_ID;
+    const submitKey = Ed25519PrivateKey.fromString(process.env.SUBMIT_KEY);    
 	
     if (operatorPrivateKey == null || operatorAccount == null) {
         throw new Error("environment variables OPERATOR_KEY and OPERATOR_ID must be present");

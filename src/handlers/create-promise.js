@@ -23,11 +23,11 @@ module.exports.handler = async (context, req) => {
 	client.setOperator(operatorAccountId, operatorPrivateKey);
 	
 	//Create topic for promise
-	const submitKey = await Ed25519PrivateKey.generate();	
-	console.log("~~~~~~~~~~~~~~~~~");
-	console.log(submitKey);
+	//const submitKey = Ed25519PrivateKey.fromString(process.env.SUBMIT_KEY);
+	//console.log("~~~~~~~~~~~~~~~~~");
+	//console.log(submitKey.toString());
 	
-	myTopic = await cpt.createPrivateTopic(submitKey);	
+	myTopic = await cpt.createPrivateTopic();	
 	const topicId = myTopic.topicId;
 
 	reqByParty = utils.getQueryOrBodyParam(req, "byParty");
@@ -63,13 +63,13 @@ module.exports.handler = async (context, req) => {
 	var promiseModel = pb.buildNewPromise(byParty, toParties, onBehalfParties, reqObligation);
 
 	if(promiseModel){	
-		returnMessage = await sm.submitMessage(submitKey, topicId, JSON.stringify(promiseModel), client);
+		returnMessage = await sm.submitMessage(topicId, JSON.stringify(promiseModel), client);
 
 		context.res = { status: 200, 
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: { myTopic, returnMessage, promiseModel, submitKey } 
+			body: { myTopic, returnMessage, promiseModel } 
 		}
 	} else {
 		context.res = { status: 200, 

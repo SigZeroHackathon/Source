@@ -3,11 +3,12 @@
 const { Client, ConsensusMessageSubmitTransaction, Ed25519PrivateKey} = require("@hashgraph/sdk");
 require("dotenv").config();
 
-module.exports.submitMessage =  async function(submitKey, topicId, message, client){
+module.exports.submitMessage =  async function(topicId, message, client){
 
 	console.log("Submit message");
 	const operatorPrivateKey = process.env.OPERATOR_KEY;
     const operatorAccount = process.env.OPERATOR_ID;
+    const submitKey = Ed25519PrivateKey.fromString(process.env.SUBMIT_KEY);    
     if (operatorPrivateKey == null || operatorAccount == null) {
         throw new Error("environment variables OPERATOR_KEY and OPERATOR_ID must be present");
     }
