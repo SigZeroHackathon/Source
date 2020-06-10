@@ -1,7 +1,6 @@
 // src/handlers/create-promise.js
 
 const utils = require("../utils");
-const cpt = require("../create-private-topic");
 const sm = require("../submit-message");
 const pb = require("../promise-builder");
 const { Client, ConsensusMessageSubmitTransaction, Ed25519PrivateKey, Ed25519PublicKey} = require("@hashgraph/sdk");
@@ -9,7 +8,8 @@ const operatorAccountId = process.env.OPERATOR_ID;
 const operatorPrivateKey = process.env.OPERATOR_KEY;
 
 module.exports.handler = async (context, req) => {
-
+	const topicId = utils.getQueryOrBodyParam(req, "topicID");
+	
 	context.log("Create promise");
 	if (operatorPrivateKey == null ||
 		operatorAccountId == null ) {
@@ -18,17 +18,16 @@ module.exports.handler = async (context, req) => {
 	
 	// Create our connection to the Hedera network
 	const client = Client.forTestnet();
+	
+	const submitKey = utils.getQueryOrBodyParam(req, "submitKey");	
+	byteArr = submitKey.split(/(?=(?:..)*$)/);
+	messageText = "";
+	byteArr.forEach(x => messageText += String.fromCharCode(parseInt(x, 16)));
+	console.log(messageText);
+	//const submitKey = await Ed25519PrivateKey.generate();
 
 	// Set your client account ID and private key used to pay for transaction fees and sign transactions
 	client.setOperator(operatorAccountId, operatorPrivateKey);
-	
-	//Create topic for promise
-	const submitKey = await Ed25519PrivateKey.generate();	
-	console.log("~~~~~~~~~~~~~~~~~");
-	console.log(submitKey);
-	
-	myTopic = await cpt.createPrivateTopic(submitKey);	
-	const topicId = myTopic.topicId;
 
 	reqByParty = utils.getQueryOrBodyParam(req, "byParty");
 	var byParty = {};
@@ -69,7 +68,7 @@ module.exports.handler = async (context, req) => {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: { myTopic, returnMessage, promiseModel, submitKey } 
+			body: { myTopic, returnMessage, promiseModel } 
 		}
 	} else {
 		context.res = { status: 200, 
