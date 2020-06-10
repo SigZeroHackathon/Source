@@ -1,3 +1,5 @@
+// src/handlers/get-promise.js
+
 const request = require('request-promise');
 const utils = require("../utils");
 const TextDecoder = require("text-encoding").TextDecoder;
@@ -18,16 +20,31 @@ module.exports.handler = async (context, req) => {
 				return response;			
 			});
 
-		var data = promiseResponse.data[0];
-		var byteArr = data.message.split(/(?=(?:..)*$)/);
-		var message = "";
-		byteArr.forEach(x => message += String.fromCharCode(parseInt(x, 16)));
+		var numRecords = promiseResponse.totalCount;
+		var messages = [];
+		var byteArr, message;
+		
+		for (var i =0; i<numRecords; i++) {
+			currentRecord = promiseResponse.data[i];
+			byteArr = currentRecord.message.split(/(?=(?:..)*$)/);
+			messageText = "";
+			byteArr.forEach(x => messageText += String.fromCharCode(parseInt(x, 16)));
+			
+			message = {
+				"messageText": messageText,
+				"consensusTime": currentRecord.consensusTime,
+				"readableTransactionID": currentRecord.readableTransactionID,
+				"transactionID": currentRecord.transactionID
+			}
+			messages.push(message);
+		}
+		
 
 		context.res = { status: 200, 
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: { promiseResponse, message } 
+			body: { messages }
 		}	
 	}	
 }
