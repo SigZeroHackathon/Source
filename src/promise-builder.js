@@ -83,15 +83,19 @@ module.exports.updatePromise = (promise, obligationId, newToParties, newOnBehalf
 			if(a < b) return -1;
 			if(a > b) return 1;
 			if(a == b) return 0;
-		})[0];
-		
+		}).reverse()[0];
 		attStatuses.push(latestAtt.attestation);
+		console.log("~~~~~~~");
+		console.log(JSON.stringify(latestAtt));
 	});
+	
+
+	
 	attStatuses = attStatuses.filter(x => x === 2);
 	promise.obligations[obligationIndex].status = attStatuses.length === 0 ? 1 : 2;
 
-	var obligationStatuses = promise.obligations.filter(x => x ===2);
-	promise.status = obligationStatuses.length === 0 ? 1: 2;
+	var obligationStatuses = promise.obligations.filter(x => x.status === 2);
+	promise.status = obligationStatuses.length === 0 ? 1 : 2;
 
 	return promise;
 }
