@@ -67,23 +67,31 @@ module.exports.updatePromise = (promise, obligationId, newToParties, newOnBehalf
 
 	promise.obligations[obligationIndex].on_behalf_of = promise.obligations[obligationIndex].on_behalf_of.concat(newOnBehalfParties.map(x => x.party_id));
 
-	/*var highestAttId = 1;
-	promise.obligations[obligationIndex].attestations.forEach(attestation => {
-		if(attestation.id >= highestAttId) {
-			highestAttId = attestation.id + 1;
-		}
-	});*/
-
 	newAttestations.forEach(newAttestation => {
 		newAttestation.id = uuidv4();
-		//newAttestation.id = highestAttId++;
 		newAttestation.timestamp = new Date();
 		promise.obligations[obligationIndex].attestations.push(newAttestation);
 	});
 
-	promise.obligations[obligationIndex].attestations.forEach(attestation => {
+	var attStatuses = [];
+	promise.parties.forEach(party => {
+		var attByParty = promise.obligations[obligationIndex].attestations.filter(x => x.party_id === party.party_id);
 		
+		var latestAtt = attByParty.sort((a, b) => {
+			var aDate = new Date(a.timestamp).getTime();
+			var bDate = new Date(b.timestamp).getTime();
+			if(a < b) return -1;
+			if(a > b) return 1;
+			if(a == b) return 0;
+		})[0];
+		
+		attStatuses.push(latestAtt.attestation);
 	});
+	attStatuses = attStatuses.filter(x => x === 2);
+	promise.obligations[obligationIndex].status = attStatuses.length === 0 ? 1 : 2;
+
+	var obligationStatuses = promise.obligations.filter(x => x ===2);
+	promise.status = obligationStatuses.length === 0 ? 1: 2;
 
 	return promise;
 }
