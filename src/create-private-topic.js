@@ -3,9 +3,10 @@
 const { Client, ConsensusTopicCreateTransaction, Ed25519PrivateKey, Ed25519PublicKey } = require("@hashgraph/sdk");
 require("dotenv").config();
 
-module.exports.createPrivateTopic = async function(){
+module.exports.createPrivateTopic = async function(appId){
 	
 	console.log("Create private topic");
+	
     const operatorPrivateKey = process.env.OPERATOR_KEY;
     const operatorAccount = process.env.OPERATOR_ID;
     const submitKey = Ed25519PrivateKey.fromString(process.env.SUBMIT_KEY);    
@@ -21,7 +22,7 @@ module.exports.createPrivateTopic = async function(){
     const submitPublicKey = submitKey.publicKey;
 
     const transactionId = await new ConsensusTopicCreateTransaction()
-        .setTopicMemo("HCS topic with submit key")
+        .setTopicMemo("sigzero")
         .setSubmitKey(submitPublicKey)
         .execute(client);
     

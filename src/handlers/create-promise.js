@@ -12,7 +12,7 @@ module.exports.handler = async (context, req) => {
 
 	context.log("Create promise");
 	if (operatorPrivateKey == null ||
-		operatorAccountId == null ) {
+		operatorAccountId == null ) { 		
 		throw new Error("environment variables OPERATOR_KEY and OPERATOR_ID must be present");
 	}
 	
@@ -22,7 +22,9 @@ module.exports.handler = async (context, req) => {
 	// Set your client account ID and private key used to pay for transaction fees and sign transactions
 	client.setOperator(operatorAccountId, operatorPrivateKey);
 	
-	myTopic = await cpt.createPrivateTopic();	
+	appId = utils.getQueryOrBodyParam(req, "appId");
+	
+	myTopic = await cpt.createPrivateTopic(appId);	
 	const topicId = myTopic.topicId;
 	
 	description = utils.getQueryOrBodyParam(req, "description");
