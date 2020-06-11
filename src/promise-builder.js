@@ -66,8 +66,20 @@ module.exports.updatePromise = (promise, obligationId, newToParties, newOnBehalf
 
 	promise.obligations[obligationIndex].on_behalf_of = promise.obligations[obligationIndex].on_behalf_of.concat(newOnBehalfParties.map(x => x.party_id));
 
+	var highestAttId = 1;
+	promise.obligations[obligationIndex].attestations.forEach(attestation => {
+		if(attestation.id >= highestAttId) {
+			highestAttId = attestation.id + 1;
+		}
+	});
 
-	//promise.obligations[obligationIndex].attestations
+	newAttestations.forEach(newAttestation => {
+		newAttestation.id = highestAttId++;
+		newAttestation.timestamp = new Date();
+		promise.obligations[obligationIndex].attestations.push(newAttestation);
+	});
+
+	
 
 	return promise;
 }
