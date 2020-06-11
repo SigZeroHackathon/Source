@@ -79,7 +79,9 @@ module.exports.updatePromise = (promise, obligationId, newToParties, newOnBehalf
 		promise.obligations[obligationIndex].attestations.push(newAttestation);
 	});
 
-	
+	promise.obligations[obligationIndex].attestations.forEach(attestation => {
+		
+	});
 
 	return promise;
 }
