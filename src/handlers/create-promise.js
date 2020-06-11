@@ -22,11 +22,6 @@ module.exports.handler = async (context, req) => {
 	// Set your client account ID and private key used to pay for transaction fees and sign transactions
 	client.setOperator(operatorAccountId, operatorPrivateKey);
 	
-	//Create topic for promise
-	//const submitKey = Ed25519PrivateKey.fromString(process.env.SUBMIT_KEY);
-	//console.log("~~~~~~~~~~~~~~~~~");
-	//console.log(submitKey.toString());
-	
 	myTopic = await cpt.createPrivateTopic();	
 	const topicId = myTopic.topicId;
 

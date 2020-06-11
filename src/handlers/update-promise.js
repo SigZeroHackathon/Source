@@ -3,6 +3,8 @@
 const utils = require("../utils");
 const sm = require("../submit-message");
 const pb = require("../promise-builder");
+const promiseParser = require("../promise-parser");
+
 const { Client, ConsensusMessageSubmitTransaction, Ed25519PrivateKey, Ed25519PublicKey} = require("@hashgraph/sdk");
 const operatorAccountId = process.env.OPERATOR_ID;
 const operatorPrivateKey = process.env.OPERATOR_KEY;
@@ -10,7 +12,7 @@ const operatorPrivateKey = process.env.OPERATOR_KEY;
 module.exports.handler = async (context, req) => {
 	const topicId = utils.getQueryOrBodyParam(req, "topicID");
 	
-	context.log("Create promise");
+	context.log("Update promise");
 	if (operatorPrivateKey == null ||
 		operatorAccountId == null ) {
 		throw new Error("environment variables OPERATOR_KEY and OPERATOR_ID must be present");
@@ -19,21 +21,8 @@ module.exports.handler = async (context, req) => {
 	// Create our connection to the Hedera network
 	const client = Client.forTestnet();
 	
-	const submitKey = utils.getQueryOrBodyParam(req, "submitKey");	
-	byteArr = submitKey.split(/(?=(?:..)*$)/);
-	messageText = "";
-	byteArr.forEach(x => messageText += String.fromCharCode(parseInt(x, 16)));
-	console.log(messageText);
-	//const submitKey = await Ed25519PrivateKey.generate();
-
 	// Set your client account ID and private key used to pay for transaction fees and sign transactions
 	client.setOperator(operatorAccountId, operatorPrivateKey);
-
-	reqByParty = utils.getQueryOrBodyParam(req, "byParty");
-	var byParty = {};
-	if(reqByParty){
-		byParty.party_id = reqByParty;
-	}
 
 	var toParties = [];
 	var reqToParties = utils.getQueryOrBodyParam(req, "toParties");
@@ -57,28 +46,35 @@ module.exports.handler = async (context, req) => {
 		});
 	}
 
-	var reqObligation = utils.getQueryOrBodyParam(req, "ob");
+	var reqObId = utils.getQueryOrBodyParam(req, "obId");
+	var allMessages = await promiseParser.parsePromise(topicId);
+	var latestMessage = allMessages.sort((a, b) => {
+		var aDate = new Date(a.consensusTime).getTime();
+		var bDate = new Date(b.consensusTime).getTime();
+		if(a < b) return -1;
+		if(a > b) return 1;
+		if(a == b) return 0;
+	})[0];
 
-	var promiseModel = pb.buildNewPromise(byParty, toParties, onBehalfParties, reqObligation);
+	var reqNewAttestations = utils.getQueryOrBodyParam(req, "attestations");
+
+	var promiseModel = pb.updatePromise(JSON.parse(latestMessage.messageText), reqObId, toParties, onBehalfParties, reqNewAttestations);
 
 	if(promiseModel){	
-		returnMessage = await sm.submitMessage(submitKey, topicId, JSON.stringify(promiseModel), client);
+		returnMessage = await sm.submitMessage(topicId, JSON.stringify(promiseModel), client);
 
 		context.res = { status: 200, 
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: { myTopic, returnMessage, promiseModel } 
+			body: { returnMessage, promiseModel } 
 		}
 	} else {
 		context.res = { status: 200, 
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: { myTopic } 
+			body: {  } 
 		}
 	}		
 };
-
-
-
