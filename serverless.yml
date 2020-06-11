@@ -21,7 +21,7 @@ provider:
   name: azure
   region: Central US
   resourceGroup: sig0-hedera-rg
-  runtime: nodejs10.x
+  runtime: nodejs12
   # prefix: "sample"  # prefix of generated resource name
   subscriptionId: 129f46f8-3a8a-4079-8c86-c646bc3baebf
   storageAccount:

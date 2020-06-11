@@ -1,6 +1,6 @@
 // src/create-private-topic.js
 
-const { Client, ConsensusTopicCreateTransaction, Ed25519PrivateKey, Ed25519PublicKey } = require("@hashgraph/sdk");
+const { Client, ConsensusTopicCreateTransaction, Ed25519PrivateKey } = require("@hashgraph/sdk");
 require("dotenv").config();
 
 module.exports.createPrivateTopic = async function(appId){
@@ -22,14 +22,13 @@ module.exports.createPrivateTopic = async function(appId){
     const submitPublicKey = submitKey.publicKey;
 
     const transactionId = await new ConsensusTopicCreateTransaction()
-        .setTopicMemo("sigzero")
+        .setTopicMemo("sigzero_" + appId)
         .setSubmitKey(submitPublicKey)
         .execute(client);
-    
+
     const receipt = await transactionId.getReceipt(client); 
     const topicId = receipt.getConsensusTopicId(); 
-	
-	
+
 	//What is ${[X]} notation?
 	var createdTopic = {
 		submitKey: `${submitKey}`,
