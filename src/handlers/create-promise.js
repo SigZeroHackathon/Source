@@ -24,6 +24,9 @@ module.exports.handler = async (context, req) => {
 	
 	myTopic = await cpt.createPrivateTopic();	
 	const topicId = myTopic.topicId;
+	
+	description = utils.getQueryOrBodyParam(req, "description");
+	notes = utils.getQueryOrBodyParam(req, "notes");
 
 	reqByParty = utils.getQueryOrBodyParam(req, "byParty");
 	var byParty = {};
@@ -55,7 +58,7 @@ module.exports.handler = async (context, req) => {
 
 	var reqObligation = utils.getQueryOrBodyParam(req, "ob");
 
-	var promiseModel = pb.buildNewPromise(byParty, toParties, onBehalfParties, reqObligation);
+	var promiseModel = pb.buildNewPromise(byParty, toParties, onBehalfParties, reqObligation, description, notes);
 
 	if(promiseModel){	
 		returnMessage = await sm.submitMessage(topicId, JSON.stringify(promiseModel), client);

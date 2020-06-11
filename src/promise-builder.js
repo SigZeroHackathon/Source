@@ -1,5 +1,5 @@
 
-module.exports.buildNewPromise = (byParty, toParties, onBehalfOfParties, obligation) => {
+module.exports.buildNewPromise = (byParty, toParties, onBehalfOfParties, obligation, description, notes) => {
 	
 	console.log("Build new promise");
 	if(!byParty || !byParty.party_id){
@@ -14,10 +14,10 @@ module.exports.buildNewPromise = (byParty, toParties, onBehalfOfParties, obligat
 		promise_id: "",
 		established: establishedDate.toUTCString(),
 		concluded: "",
-		status: "2",
+		status: 2,
 		expriation: expriationDate.toUTCString(),
-		description: "",
-		notes: "",
+		description: description,
+		notes: notes,
 		parties: [
 			//{
 			//	party_id:"",
@@ -33,7 +33,7 @@ module.exports.buildNewPromise = (byParty, toParties, onBehalfOfParties, obligat
 				to_parties: [],
 				on_behalf_of: [],
 				attestations: [],
-				status: "2",
+				status: 2,
 				conditions: "",
 				attachments: [],
 				expriation: expriationDate.toUTCString(),
